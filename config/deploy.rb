@@ -40,7 +40,7 @@ end
 # set :shared_files, fetch(:shared_files, []).push('config/database.yml', 'config/secrets.yml')
 task :setup do
   command %{mkdir -p "#{fetch(:shared_path)}/config"}
-  #command %{touch "#{fetch(:shared_path)}/config/database.yml"}
+  command %{touch "#{fetch(:shared_path)}/config/database.yml"}
   command %{touch "#{fetch(:shared_path)}/config/master.key"}
   comment "⚠️  Edit shared/config/database.yml and master.key before deploying."
 end
