@@ -21,8 +21,13 @@ set :repository, 'https://github.com/saem-mac2op/vietus.git'
 set :branch, 'main'
 set :user, 'deploy'
 
-set :shared_dirs, fetch(:shared_dirs, []).push('log', 'tmp/pids', 'tmp/sockets')
+set :shared_dirs, fetch(:shared_dirs, []).push('log', 'tmp/pids', 'tmp/sockets', 'public/uploads')
 set :shared_files, fetch(:shared_files, []).push('config/database.yml', 'config/master.key')
+
+# Puma configuration
+set :puma_socket, "#{fetch(:deploy_to)}/shared/tmp/sockets/puma.sock"
+set :puma_pid, "#{fetch(:deploy_to)}/shared/tmp/pids/puma.pid"
+set :puma_state, "#{fetch(:deploy_to)}/shared/tmp/pids/puma.state"
 
 task :remote_environment do
   invoke :'rbenv:load'
