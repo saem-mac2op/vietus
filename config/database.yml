@@ -1,0 +1,49 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+sqlite: &sqlite
+  adapter: sqlite3
+  pool: 5
+  timeout: 5000
+
+development:
+  primary:
+    <<: *default
+    database: vietus_development
+  cache:
+    <<: *sqlite
+    database: storage/vietus_development_cache.sqlite3
+    migrations_paths: db/cache_migrate
+  cable:
+    <<: *sqlite
+    database: storage/vietus_development_cable.sqlite3
+    migrations_paths: db/cable_migrate
+  queue:
+    <<: *sqlite
+    database: storage/vietus_development_queue.sqlite3
+    migrations_paths: db/queue_migrate
+
+test:
+  <<: *default
+  database: vietus_test
+
+production:
+  primary:
+    url: <%= ENV['DATABASE_URL'] %>
+    adapter: postgresql
+    encoding: unicode
+    pool: 5
+  cache:
+    <<: *sqlite
+    database: storage/vietus_production_cache.sqlite3
+    migrations_paths: db/cache_migrate
+  cable:
+    <<: *sqlite
+    database: storage/vietus_production_cable.sqlite3
+    migrations_paths: db/cable_migrate
+  queue:
+    <<: *sqlite
+    database: storage/vietus_production_queue.sqlite3
+    migrations_paths: db/queue_migrate
